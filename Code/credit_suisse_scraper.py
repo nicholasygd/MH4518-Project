@@ -67,9 +67,11 @@ for dataset in datasets:
         date = data_point['date'] # Takes the format of an ISO 8601 string
         value = data_point['value']
         instrument_data.append(data_point)
+
+    # Save data to CSV using Pandas DataFrame after parsing ISO 8601 date string
     instrument_df = pd.DataFrame(instrument_data, columns=["date", "value"])
+    instrument_df['date'] = pd.to_datetime(instrument_df['date']).dt.tz_convert(None)
     instrument_df.to_csv(instrument_filename, index=False)
     print(f"- Extracted to {instrument_filename}\n")
 print("If any instrument is not included, please re-run the script.")
-time.sleep(SLEEP_SECONDS)
 driver.close()
