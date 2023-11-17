@@ -7,6 +7,12 @@ class PayoffFunctions:
         else:
             payoff = denom*(Spath[m-1]/initial)
         return payoff
+        
+    def check_barrier_hit(Spath, V=1743.525):
+        Smin = min(Spath)
+        if Smin > V:
+            return False
+        return True
     
     def payoff_no_barrier(ST, initial=3487.05, parti=1.5, denom=1000):
         if ST >= initial:
