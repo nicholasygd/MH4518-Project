@@ -11,6 +11,7 @@ import pandas as pd
 driver = webdriver.Firefox()
 wait = WebDriverWait(driver, 30)
 
+DATA_FOLDER = "../Data/"
 LINK = "https://derivative.credit-suisse.com/"
 DERIVATIVE_SUBLINK = "ch/ch/en/detail/outperformance-bonus-certificate-euro-stoxx-50/CH1149494077/114949407"
 DISCLAIMER_SUBLINK = "/ch/ch/en/disclaimer"
@@ -71,7 +72,7 @@ for dataset in datasets:
     # Save data to CSV using Pandas DataFrame after parsing ISO 8601 date string
     instrument_df = pd.DataFrame(instrument_data, columns=["date", "value"])
     instrument_df['date'] = pd.to_datetime(instrument_df['date']).dt.tz_convert(None)
-    instrument_df.to_csv(instrument_filename, index=False)
-    print(f"- Extracted to {instrument_filename}\n")
+    instrument_df.to_csv(f"{DATA_FOLDER}/{instrument_filename}", index=False)
+    print(f"- Extracted to {DATA_FOLDER}/{instrument_filename}\n")
 print("If any instrument is not included, please re-run the script.")
 driver.close()
